@@ -14,4 +14,4 @@ up:
 	docker compose run --rm migrate -path /migrations/ -database ${DB_URL} up
 
 down:
-	docker compose down --remove-orphans --rmi
+	docker compose down --remove-orphans --rmi all
