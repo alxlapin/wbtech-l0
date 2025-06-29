@@ -1,7 +1,6 @@
 CREATE TABLE orders
 (
-    order_uid          varchar(255)
-        CONSTRAINT pk_order_uid PRIMARY KEY,
+    order_uid          varchar(255) PRIMARY KEY,
     track_number       varchar(255) NOT NULL,
     entry              varchar(255) NOT NULL,
     locale             varchar(255) NOT NULL,
@@ -16,9 +15,8 @@ CREATE TABLE orders
 
 CREATE TABLE deliveries
 (
-    delivery_uid uuid
-        CONSTRAINT pk_delivery_uid PRIMARY KEY,
-    order_uid    varchar(255) REFERENCES orders (order_uid),
+    delivery_uid uuid PRIMARY KEY,
+    order_uid    varchar(255) NOT NULL REFERENCES orders (order_uid),
     name         varchar(255) NOT NULL,
     phone        varchar(255) NOT NULL,
     zip          varchar(255) NOT NULL,
@@ -30,9 +28,8 @@ CREATE TABLE deliveries
 
 CREATE TABLE payments
 (
-    payment_uid   uuid
-        CONSTRAINT pk_payment_uid PRIMARY KEY,
-    order_uid     varchar(255) REFERENCES orders (order_uid),
+    payment_uid   uuid PRIMARY KEY,
+    order_uid     varchar(255) NOT NULL REFERENCES orders (order_uid),
     transaction   varchar(255) NOT NULL,
     request_id    varchar(255) NOT NULL,
     currency      varchar(255) NOT NULL,
@@ -47,9 +44,8 @@ CREATE TABLE payments
 
 CREATE TABLE items
 (
-    item_uid     uuid
-        CONSTRAINT pk_item_uid PRIMARY KEY,
-    order_uid    varchar(255) REFERENCES orders (order_uid),
+    item_uid     uuid PRIMARY KEY,
+    order_uid    varchar(255) NOT NULL REFERENCES orders (order_uid),
     chrt_id      integer      NOT NULL,
     track_number varchar(255) NOT NULL,
     price        integer      NOT NULL,
