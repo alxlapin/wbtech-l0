@@ -19,8 +19,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o wbtechl0 .
 # Final stage
 FROM alpine:latest
 
+WORKDIR /app
+
 # Copy the pre-built binary from the builder stage
-COPY --from=builder /app/wbtechl0 /bin/wbtechl0
+COPY --from=builder /app/wbtechl0 /app/index.html ./
 
 # Command to run the application
-CMD ["/bin/wbtechl0"]
+CMD ["./wbtechl0"]

@@ -6,7 +6,11 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/order", getOrderHandler)
+	http.HandleFunc("GET /order/{id}", getOrderHandler)
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./index.html")
+	})
 
 	fmt.Println("Server running on port 8080")
 
@@ -14,10 +18,7 @@ func main() {
 }
 
 func getOrderHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
+	orderID := r.PathValue("id")
 
-	fmt.Fprintf(w, "Request was handled")
+	fmt.Fprintf(w, "Request was handled ", orderID)
 }
