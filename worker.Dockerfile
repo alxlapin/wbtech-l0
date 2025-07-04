@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN cd "cmd/api" && CGO_ENABLED=0 GOOS=linux go build -o /app/api-bin .
+RUN cd "cmd/worker" && CGO_ENABLED=0 GOOS=linux go build -o /app/worker-bin .
 
 # Final stage
 FROM alpine:latest
@@ -22,9 +22,9 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the pre-built binary from the builder stage
-COPY --from=builder /app/api-bin /app/index.html ./
+COPY --from=builder /app/worker-bin ./
 
-RUN chmod +x api-bin
+RUN chmod +x worker-bin
 
 # Command to run the application
-CMD ["./api-bin"]
+CMD ["./worker-bin"]
