@@ -1,33 +1,32 @@
 CREATE TABLE orders
 (
-    order_uid          varchar(255) PRIMARY KEY,
-    track_number       varchar(255) NOT NULL,
-    entry              varchar(255) NOT NULL,
-    locale             varchar(255) NOT NULL,
-    internal_signature varchar(255) NOT NULL,
-    customer_id        varchar(255) NOT NULL,
-    delivery_service   varchar(255) NOT NULL,
-    sm_id              integer      NOT NULL,
-    date_created       timestamp(0) NOT NULL
+    id               varchar(255) PRIMARY KEY,
+    track_number     varchar(255) NOT NULL,
+    entry            varchar(255) NOT NULL,
+    locale           varchar(255) NOT NULL,
+    customer_id      varchar(255) NOT NULL,
+    delivery_service varchar(255) NOT NULL,
+    sm_id            integer      NOT NULL,
+    date_created     timestamp(0) NOT NULL
 );
 
 CREATE TABLE deliveries
 (
-    delivery_uid uuid PRIMARY KEY,
-    order_uid    varchar(255) NOT NULL REFERENCES orders (order_uid),
-    name         varchar(255) NOT NULL,
-    phone        varchar(255) NOT NULL,
-    zip          varchar(255) NOT NULL,
-    city         varchar(255) NOT NULL,
-    address      varchar(255) NOT NULL,
-    region       varchar(255) NOT NULL,
-    email        varchar(255) NOT NULL
+    id       uuid PRIMARY KEY,
+    order_id varchar(255) NOT NULL REFERENCES orders (id),
+    name     varchar(255) NOT NULL,
+    phone    varchar(255) NOT NULL,
+    zip      varchar(255) NOT NULL,
+    city     varchar(255) NOT NULL,
+    address  varchar(255) NOT NULL,
+    region   varchar(255) NOT NULL,
+    email    varchar(255) NOT NULL
 );
 
 CREATE TABLE payments
 (
-    payment_uid   uuid PRIMARY KEY,
-    order_uid     varchar(255) NOT NULL REFERENCES orders (order_uid),
+    id            uuid PRIMARY KEY,
+    order_id      varchar(255) NOT NULL REFERENCES orders (id),
     transaction   varchar(255) NOT NULL,
     request_id    varchar(255) NOT NULL,
     currency      varchar(255) NOT NULL,
@@ -43,8 +42,8 @@ CREATE TABLE payments
 
 CREATE TABLE items
 (
-    item_uid     uuid PRIMARY KEY,
-    order_uid    varchar(255) NOT NULL REFERENCES orders (order_uid),
+    id           uuid PRIMARY KEY,
+    order_id     varchar(255) NOT NULL REFERENCES orders (id),
     chrt_id      integer      NOT NULL,
     track_number varchar(255) NOT NULL,
     price        integer      NOT NULL CHECK ( price > 0 ),
